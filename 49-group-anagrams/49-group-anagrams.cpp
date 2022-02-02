@@ -28,7 +28,7 @@ public:
             m[t].push_back(s);
         }
         vector<vector<string>> ans;
-        for(auto it:m) ans.push_back(it.second);
+        for(auto &it:m) ans.push_back(it.second);
         return ans;
         
     }
