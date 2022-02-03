@@ -1,7 +1,11 @@
 class Solution {
 public:
-    bool checkIfPangram(string sen) {
-        set<char> s; for(auto c:sen) s.insert(c);
-        return s.size()==26;
+    bool checkIfPangram(string s) {
+        int seen=0;
+        for(char c:s){
+            int n=c-'a';
+            seen=seen|(1<<n);
+        }
+        return seen==((1<<26)-1);
     }
 };
