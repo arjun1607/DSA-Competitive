@@ -1,12 +1,13 @@
 class Solution {
 public:
-    bool isCovered(vector<vector<int>>& r, int left, int right) {
-        set<int> s; for(int i=left; i<=right;i++) s.insert(i);
-        for(auto i:r){
-            for(int k=i[0];k<=i[1];k++){
-                if(s.find(k)!=s.end()) s.erase(k);
-            }
+    bool isCovered(vector<vector<int>>& arr, int l, int r) {
+        vector<int> range(52, 0);
+        for(auto i:arr){
+            range[i[0]]+=1;
+            range[i[1]+1]+=-1;
         }
-        return s.size()==0;
+        for(int i=1;i<=50;i++) range[i]+=range[i-1];
+        for(int i=l;i<=r;i++) if(range[i]<=0) return false;
+        return true;
     }
 };
