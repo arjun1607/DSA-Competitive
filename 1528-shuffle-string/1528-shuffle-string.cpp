@@ -1,10 +1,13 @@
 class Solution {
 public:
     string restoreString(string s, vector<int>& idx) {
-        string t(s.size(),' ');
-        for(int i=0;i<s.size();i++){
-            t[idx[i]]=s[i];
+        int i=0;
+        while(i<s.size()){
+            if(idx[i]!=i){
+                swap(s[i], s[idx[i]]);
+                swap(idx[i], idx[idx[i]]);
+            }else i++;
         }
-        return t;
+        return s;
     }
 };
