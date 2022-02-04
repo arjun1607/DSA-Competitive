@@ -20,11 +20,9 @@ public:
         for(char &c:s) if(c>='a' && c<='z') c=' ';
         vector<string> v=mv(s);
         for(auto &i:v){
-            if(i[0]=='0'){
-                reverse(i.begin(), i.end());
-                while(i.back()=='0') i.pop_back();
-                reverse(i.begin(), i.end());
-            }
+            int j=0;
+            while(j<i.size() && i[j]=='0')j++;
+            i=i.substr(j);
         }
         set<string> set; for(auto i:v) set.insert(i);
         return set.size();
