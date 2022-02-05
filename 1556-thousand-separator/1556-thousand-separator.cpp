@@ -1,9 +1,8 @@
 class Solution {
 public:
     string thousandSeparator(int n) {
-        if(n==0) return "0";
+        if(n<1000) return to_string(n);
         int l=log10(n)+1;
-        if(l<=3) return to_string(n);
         int r=l%3;
         string t=to_string(n), ans="";
         if(r>0) {
