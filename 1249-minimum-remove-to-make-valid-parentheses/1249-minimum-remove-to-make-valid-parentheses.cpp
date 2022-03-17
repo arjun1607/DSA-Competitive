@@ -1,6 +1,7 @@
 class Solution {
 public:
     string minRemoveToMakeValid(string str) {
+        /*
         int cnt=0;
         stack<pair<char, int>> s;
         for(char c:str){
@@ -28,6 +29,25 @@ public:
  
             }else ans+=str[i];
             
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
+        */
+        stack<char> s;
+        for(char &c:str){
+            if(c=='(') s.push(c);
+            else if(c==')'){
+                if(!s.empty() && s.top()=='(') s.pop();
+                else c='*';
+            }
+        }
+        string ans="";
+        reverse(str.begin(), str.end());
+        for(char c:str){
+            if(c!='*') {
+                if(!s.empty() && c==s.top()) s.pop();
+                else ans+=c;
+            }
         }
         reverse(ans.begin(), ans.end());
         return ans;
