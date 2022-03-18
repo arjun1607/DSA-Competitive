@@ -11,7 +11,7 @@ public:
 	// #define ll long long
 	ll countStrings(int n) {
 	   ll last0=1, last1=1, tot=2;
-	   const ll MOD = 1e9 + 7;
+	   ll MOD = 1e9 + 7;
 	   for(int i=1;i<n;i++){
 	       last1=last0%MOD;
 	       last0=tot%MOD;
