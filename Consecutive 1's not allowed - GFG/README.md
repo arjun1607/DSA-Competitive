@@ -1,5 +1,5 @@
 # Consecutive 1's not allowed
-##  Medium 
+## Medium 
 <div class="problem-statement">
                 <p></p><p><span style="font-size:18px">Given a positive integer <strong>N</strong>, count all possible distinct binary strings of length <strong>N</strong> such that there are <strong>no consecutive 1’s</strong>. Output your answer <strong>modulo 10^9 + 7.</strong></span></p>
 
