@@ -9,12 +9,13 @@ public:
         // for(int i=0;i<p.size();i++) ans=max(ans, m[i]-min[i]);
         // return ans;
         
-        int MIN=p[0];
+        int MIN=p[0], ans=0;
         vector<int> dp(p.size());
         for(int i=1;i<p.size();i++){
             dp[i]=(p[i] > MIN)?(p[i]-MIN):0;
             MIN=min(MIN, p[i]);
+            ans=max(ans, dp[i]);
         }
-        return *max_element(dp.begin(), dp.end());
+        return ans;
     }
 };
