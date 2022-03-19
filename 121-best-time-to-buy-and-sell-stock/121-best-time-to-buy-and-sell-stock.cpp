@@ -8,7 +8,8 @@ public:
         // int ans=0;
         // for(int i=0;i<p.size();i++) ans=max(ans, m[i]-min[i]);
         // return ans;
-        
+        ios_base::sync_with_stdio(false);cin.tie(nullptr);cout.tie(nullptr);
+
         int minPrice=INT_MAX, ans=0;
         for(int price:prices){
             minPrice=min(minPrice, price);
