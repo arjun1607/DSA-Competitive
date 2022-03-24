@@ -1,6 +1,6 @@
 class Solution {
 public:
-    static int helper(vector<string> words, vector<int> farr, vector<int> &score, int idx){
+    static int helper(vector<string> words, vector<int> &farr, vector<int> &score, int idx){
         if(idx==words.size()) return 0;
         
         int score_no=helper(words, farr, score, idx+1);
@@ -17,6 +17,7 @@ public:
         if(flag){
             score_yes=sword+helper(words, farr, score, idx+1);
         }
+        
         for(char ch:word){
             farr[ch-'a']++;
         }
