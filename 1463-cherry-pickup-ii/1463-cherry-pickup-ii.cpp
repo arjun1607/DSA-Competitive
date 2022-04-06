@@ -35,6 +35,7 @@ public:
         return memo(0, 0, n - 1, grid, m, n, dp);
         */
         
+   /*  TABULATION 3D     
         int dp[m][n][n];
         // base case
         for(int j1=0;j1<n;j1++){
@@ -51,6 +52,7 @@ public:
                     for (int dj1 = -1; dj1 <= 1; dj1++) {
                         for (int dj2 = -1; dj2 <= 1; dj2++) {
                           int val=0;
+                            
                           if (j1 == j2) val = grid[i][j1]; 
                           else val = grid[i][j1] + grid[i][j2]; 
                             
@@ -66,6 +68,47 @@ public:
             }
         }
         return dp[0][0][n-1];
+        
+    */  
+        
+        
+        // SPACE OPTIMISED TO 2D
+        // we are only using (i+1)th row so no need to store for other values of row
+        
+        vector<vector<int>> front(n, vector<int>(n));
+        vector<vector<int>> curr(n, vector<int>(n));
+        
+        for(int j1=0;j1<n;j1++){
+            for(int j2=0;j2<n;j2++){
+                if (j1 == j2) front[j1][j2] = grid[m-1][j1];
+                else front[j1][j2] = grid[m-1][j1] + grid[m-1][j2];
+            }
+        }
+        //. tabualtion is BOTTOM UP -> from base case to up -> from row n-1 to 0
+        for(int i=m-2;i>=0;i--){
+            for(int j1=0;j1<n;j1++){
+                for(int j2=0;j2<n;j2++){
+                    int maxi = INT_MIN;
+                    for (int dj1 = -1; dj1 <= 1; dj1++) {
+                        for (int dj2 = -1; dj2 <= 1; dj2++) {
+                          int val=0;
+                            
+                          if (j1 == j2) val = grid[i][j1]; 
+                          else val = grid[i][j1] + grid[i][j2]; 
+                            
+                          if(j1+dj1 >=0 && j1+dj1<n && j2+dj2 >=0 && j2+dj2<n) 
+                              val += front[j1+dj1][j2+dj2];
+                          else val += -1e8;
+                            
+                          maxi = max(maxi, val);
+                        }
+                      }
+                   curr[j1][j2] = maxi;
+                }
+            }
+            front = curr;
+        }
+        return front[0][n-1];
     }
 };
 
