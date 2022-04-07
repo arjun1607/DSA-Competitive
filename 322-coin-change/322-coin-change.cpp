@@ -23,6 +23,7 @@ public:
         return (ans>=1e9)?-1:ans;
         */
         
+        /* TABULATION
         vector<vector<int>> dp(n, vector<int>(target+1));
         for(int T=0;T<=target;T++){
             if(T%coins[0] == 0) dp[0][T]=T/coins[0];
@@ -38,6 +39,26 @@ public:
             }
         }
         return (dp[n-1][target]>=1e9)?-1:dp[n-1][target];
+        */
+        
+        // SPACE OPTIMISED
+        vector<int> prev(target+1), curr(target+1);
+        for(int T=0;T<=target;T++){
+            if(T%coins[0] == 0) prev[T]=T/coins[0];
+            else prev[T]=1e9;
+        }
+        prev[0]=0;
+        for(int i=1;i<n;i++){
+            curr[0]=0;
+            for(int T=1;T<=target;T++){
+                int nottake = 0 + prev[T];
+                int take =INT_MAX;
+                if(coins[i]<=T) take = 1 + curr[T-coins[i]];
+                curr[T] = min(take, nottake);
+            }
+            prev=curr;
+        }
+        return (prev[target]>=1e9)?-1:prev[target];
     }
 };
 
