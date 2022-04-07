@@ -21,6 +21,8 @@ public:
         vector<vector<int>> dp(n, vector<int>(amount+1, -1));
         return memo(n-1, amount, coins, dp);
         */
+        
+        /* TABULATION
         vector<vector<int>> dp(n, vector<int>(amount+1));
         for(int i=0;i<n;i++) dp[i][0]=1;
         for(int T=0;T<=amount;T++){
@@ -36,6 +38,26 @@ public:
             }
         }
         return dp[n-1][amount];
+        */
+        
+        // SPACE OPTIMISED
+        vector<int> prev(amount+1), curr(amount+1);
+        prev[0]=1;
+        for(int T=0;T<=amount;T++){
+            if(T%coins[0]==0) prev[T]=1;
+            else prev[T]=0;
+        }
+        for(int i=1;i<n;i++){
+            curr[0]=1;
+            for(int T=1;T<=amount;T++){
+                int nottake = prev[T]; 
+                int take = 0;
+                if(coins[i] <= T) take = curr[T-coins[i]];
+                curr[T]=take+nottake;
+            }
+            prev=curr;
+        }
+        return prev[amount];
     }
 };
 
