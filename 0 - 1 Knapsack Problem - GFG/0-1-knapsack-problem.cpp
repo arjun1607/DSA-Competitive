@@ -22,6 +22,8 @@ class Solution
     int knapSack(int W, int wt[], int val[], int n) { 
        // vector<vector<int>> dp(n, vector<int>(W+1,-1));
        // return memo(n-1, W, wt, val, dp);
+       
+       /*
        vector<vector<int>> dp(n, vector<int>(W+1, 0));
        for(int j=wt[0]; j<=W;j++) dp[0][j]=val[0];
        for(int i=1;i<n;i++){
@@ -33,6 +35,20 @@ class Solution
            }
        }
        return dp[n-1][W];
+      */
+      
+       vector<int> prev(W+1, 0), curr(W+1, 0);
+       for(int j=wt[0]; j<=W;j++) prev[j]=val[0];
+       for(int i=1;i<n;i++){
+           for(int j=0;j<=W;j++){
+                int notpick=prev[j];
+                int pick=INT_MIN;
+                if(wt[i]<=j) pick=val[i]+prev[j-wt[i]];
+                curr[j]=max(pick, notpick);
+           }
+           prev=curr;
+       }
+       return prev[W];
     }
 };
 
