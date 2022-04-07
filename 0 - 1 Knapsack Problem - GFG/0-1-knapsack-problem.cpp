@@ -37,6 +37,7 @@ class Solution
        return dp[n-1][W];
       */
       
+      /*
        vector<int> prev(W+1, 0), curr(W+1, 0);
        for(int j=wt[0]; j<=W;j++) prev[j]=val[0];
        for(int i=1;i<n;i++){
@@ -47,6 +48,19 @@ class Solution
                 curr[j]=max(pick, notpick);
            }
            prev=curr;
+       }
+       return prev[W];
+       */
+       
+       vector<int> prev(W+1, 0);
+       for(int j=wt[0]; j<=W;j++) prev[j]=val[0];
+       for(int i=1;i<n;i++){
+           for(int j=W;j>=0;j--){
+                int notpick=prev[j];
+                int pick=INT_MIN;
+                if(wt[i]<=j) pick=val[i]+prev[j-wt[i]];
+                prev[j]=max(pick, notpick);
+           }
        }
        return prev[W];
     }
