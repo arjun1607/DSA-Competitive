@@ -20,8 +20,10 @@ public:
         return dp[i][w]=max(take, nottake);
     }
     int knapSack(int n, int w, int val[], int wt[]){
-        // vector<vector<int>> dp(n, vector<int>(w+1, -1));
-        // return memo(n-1, w, val, wt, dp);
+        /*
+         vector<vector<int>> dp(n, vector<int>(w+1, -1));
+         return memo(n-1, w, val, wt, dp);
+        */
         
         /*
         vector<vector<int>> dp(n, vector<int>(w+1));
@@ -39,7 +41,7 @@ public:
         return dp[n-1][w];
         */
         
-        vector<int> prev(w+1), curr(w+1);
+        vector<int> prev(w+1);
         for(int j=0;j<=w;j++){
             prev[j]=((int)(j/wt[0]))*val[0];
         }
@@ -47,10 +49,9 @@ public:
             for(int j=0;j<=w;j++){
                 int nottake=prev[j];
                 int take=0;
-                if(wt[i]<=j) take=val[i]+curr[j-wt[i]];
-                curr[j]=max(take, nottake);
+                if(wt[i]<=j) take=val[i]+prev[j-wt[i]];
+                prev[j]=max(take, nottake);
             }
-            prev=curr;
         }
         return prev[w];
     }
