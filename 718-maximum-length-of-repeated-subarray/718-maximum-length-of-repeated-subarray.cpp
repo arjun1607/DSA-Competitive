@@ -47,7 +47,7 @@ public:
         */
         
         int n=nums1.size(), m=nums2.size();
-        // TABULATION
+        /* TABULATION
         vector<vector<int>>  dp(n+1, vector<int>(m+1, 0));
         int res=0;
         for(int i=1;i<=n;i++){
@@ -57,6 +57,21 @@ public:
                     res=max(res, dp[i][j]);
                 }else dp[i][j]=0;
             }
+        }
+        return res;
+        */
+        
+        // SPACE OPTIMISED
+        vector<int> prev(m+1, 0), curr(m+1, 0);
+        int res=0;
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(nums1[i-1]==nums2[j-1]){
+                    curr[j] = 1 + prev[j-1];
+                    res=max(res, curr[j]);
+                }else curr[j]=0;
+            }
+            prev=curr;
         }
         return res;
     }
