@@ -36,13 +36,10 @@ public:
         // SPACE OPTIMISED
         vector<int> front(n, 0), curr(n, 0);
         for(int i=n-1;i>=0;i--){
-            for(int j=0;j<n;j++){
-                if(j<i) curr[j]=0;
-                else if(j==i) curr[j]=1;
-                else{
+            curr[i]=1;
+            for(int j=i+1;j<n;j++){
                   if(s[i]==s[j])  curr[j]=2+front[j-1]; 
                   else curr[j] = max(front[j], curr[j-1]);
-                }
             }
             front=curr;
         }
