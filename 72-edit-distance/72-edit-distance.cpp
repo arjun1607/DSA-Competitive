@@ -16,6 +16,7 @@ public:
         return memo(n, m, s, t, dp);
         */
         
+        /*
         int dp[n+1][m+1];
         for(int i=0;i<=n;i++){
             for(int j=0;j<=m;j++){
@@ -27,5 +28,20 @@ public:
             }
         }
         return dp[n][m];
+        */
+        
+        vector<int> prev(m+1), curr(m+1);
+        for(int i=0;i<=n;i++){
+            for(int j=0;j<=m;j++){
+                if(i==0 || j==0) curr[j]=max(i,j);
+                else{
+                    if(s[i-1]==t[j-1]) curr[j]=prev[j-1];
+                    else curr[j]=1+min({ curr[j-1], prev[j-1], prev[j]});
+                }
+            }
+            prev=curr;
+        }
+        return prev[m];
+        
     }
 };
