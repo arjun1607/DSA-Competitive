@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int memo(int i, int j, string s, string t, vector<vector<int>> &dp){
+    int memo(int i, int j, string &s, string &t, vector<vector<int>> &dp){
         if(i==0 || j==0) return max(i,j);
         if(dp[i][j]!=-1) return dp[i][j];
         if(s[i-1]==t[j-1]) return dp[i][j]=memo(i-1, j-1, s, t, dp);
