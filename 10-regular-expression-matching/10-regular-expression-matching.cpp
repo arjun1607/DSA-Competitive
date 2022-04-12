@@ -2,11 +2,9 @@ class Solution {
 public:
     bool memo(int i, int j, string &s, string &p, vector<vector<int>> &dp){
         if(i==s.size() && j==p.size()) {
-            cout<<i<<" "<<j<<"true"<<endl;
             return true;
         }
         if(j==p.size()) {
-            cout<<i<<" "<<j<<"false"<<endl;
             return false;
         }
         if(i==s.size()){
@@ -15,12 +13,10 @@ public:
             int c=1;
             for(int jj=j;jj<p.size();jj++){
                 if( (c==1 && p[jj]=='*') || (c==-1 && p[jj]!='*')) {
-                    cout<<i<<" "<<j<<"false"<<endl;
                     return false;
                 }
                 c*=-1;
             }
-            cout<<i<<" "<<j<<"true"<<endl;
             return true;
         }
          
@@ -41,8 +37,6 @@ public:
         else if(j+1<p.size() && p[j+1]=='*')
             return dp[i][j] = memo(i, j+2, s, p, dp);
     
-        
-        cout<<i<<" "<<j<<"false"<<endl;
         return dp[i][j] = false;
        
     }
