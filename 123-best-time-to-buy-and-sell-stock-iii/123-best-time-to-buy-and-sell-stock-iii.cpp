@@ -22,11 +22,9 @@ public:
         */
         
         vector<vector<vector<int>>> dp(n+1, vector<vector<int>>(2, vector<int>(3, 0)));
-        for(int i=n; i>=0; i--){
+        for(int i=n-1; i>=0; i--){
             for(int buy=0; buy<=1; buy++){
-                for(int k=0; k<=2; k++){
-                    if(i==n || k==0) dp[i][buy][k] = 0;
-                    else{
+                for(int k=1; k<=2; k++){
                         int profit;
                         if(buy)
                             profit=max(-prices[i] + dp[i+1][0][k], dp[i+1][1][k]);
@@ -34,7 +32,6 @@ public:
                             profit=max( prices[i] + dp[i+1][1][k-1], dp[i+1][0][k]);
                         }
                         dp[i][buy][k]=profit;
-                    }
                 }
             }
         }
