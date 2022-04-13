@@ -16,11 +16,12 @@ public:
     
     int maxProfit(vector<int>& prices) {
         int n=prices.size();
-        /*
+        /* MEMOIZATION
         vector<vector<vector<int>>> dp(n, vector<vector<int>>(2, vector<int>(3, -1)));
         return memo(0, 1, prices, dp, 2);
         */
         
+        /* TABUALTION
         vector<vector<vector<int>>> dp(n+1, vector<vector<int>>(2, vector<int>(3, 0)));
         for(int i=n-1; i>=0; i--){
             for(int buy=0; buy<=1; buy++){
@@ -36,5 +37,58 @@ public:
             }
         }
         return dp[0][1][2];
+        */
+        
+        // SPACE OPTIMIZATION
+        vector<vector<int>> front(2, vector<int>(3, 0)), curr(2, vector<int>(3, 0));
+        for(int i=n-1; i>=0; i--){
+            for(int buy=0; buy<=1; buy++){
+                for(int k=1; k<=2; k++){
+                        int profit;
+                        if(buy)
+                            profit=max(-prices[i] + front[0][k], front[1][k]);
+                        else {
+                            profit=max( prices[i] + front[1][k-1], front[0][k]);
+                        }
+                        curr[buy][k]=profit;
+                }
+            }
+            front=curr;
+        }
+        return front[1][2];
+        
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
