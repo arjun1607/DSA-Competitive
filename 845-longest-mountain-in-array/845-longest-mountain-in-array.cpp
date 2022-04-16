@@ -20,16 +20,36 @@ public:
         return lbs;
         */
         int i=0, ans=0;
+        /*
         while(i<n){
+            
             int up=i+1;            
             while(up<n && nums[up]>nums[up-1]) up++;
             int down=up;
             while(down<n && nums[down]<nums[down-1]) down++;
-            if(up-i>=2 && down-up>=1) ans=max(ans, down-i);        
+            
+            if(up-i>=2 && down-up>=1) ans=max(ans, down-i);  
+            
             if(down<n && down-1>=0 && nums[down-1]<nums[down]) 
                 i=down-1;
             else
                 i=down;
+        }
+        return ans;
+        */
+        while(i<n){
+            int j=i, inc=0, dec=0;
+            while(j+1<n && nums[j]<nums[j+1]){
+                inc++;
+                j++;
+            }
+            while(j+1<n && nums[j]>nums[j+1]){
+                dec++;
+                j++;
+            }
+            if(inc && dec) ans=max(ans, inc+dec+1);
+            if(i!=j) i=j;
+            else i++;
         }
         return ans;
     }
