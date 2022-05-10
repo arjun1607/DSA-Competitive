@@ -1,21 +1,22 @@
 class Solution {
 public:
-    vector<string> codes = { "", "abc", "def", "ghi", "jkl","mno", "pqrs", "tuv", "wxyz"};
-    vector<string> help(string d){
-        if(d.size()==0) return {""};
-        char ch=d[0];
-        string ros=d.substr(1);
-        string codesforch=codes[ch-'1'];
-        vector<string> recans=help(ros), myans;
-        for(char c:codesforch){
-            for(string s:recans){
-                myans.push_back(c+s);
-            }
+    string pad[10] = {"", "", "abc", "def", "ghi", "jkl", "mno", "qprs", "tuv", "wxyz"};
+    
+    void helper(string q, string a, vector<string> &ans){
+        if(q.size()==0){
+            ans.push_back(a);
+            return ;
         }
-        return myans;
+        int i=q[0]-'0';
+        string code=pad[i];
+        for(char c:code){
+            helper(q.substr(1), a+c, ans);
+        }
     }
-    vector<string> letterCombinations(string d) {
-        if(d=="") return {};
-        else return help(d);
+    vector<string> letterCombinations(string digits) {
+        vector<string> ans;
+        if(digits.size()==0) return ans;
+        helper(digits, "", ans);
+        return ans;
     }
 };
