@@ -2,7 +2,6 @@ class Solution {
 public:
     vector<vector<int>> ans;
     void helper(int i, int nosleft, int target, vector<int> &temp, int currsum){
- 
         if(nosleft==0){
             if(currsum==target){
                 ans.push_back(temp);
