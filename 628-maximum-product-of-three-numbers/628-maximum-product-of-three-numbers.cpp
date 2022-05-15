@@ -1,37 +1,23 @@
 class Solution {
 public:
-    int maximumProduct(vector<int>& a) {
-      int max1 = INT_MIN, max2 = INT_MIN, max3 = INT_MIN;
-		int min1 = INT_MAX, min2 = INT_MAX;
-		int n = a.size();
-		for (int i = 0; i < n; i++)
-		{
-			if (a[i] > max1)
-			{
-				max3 = max2;
-				max2 = max1;
-				max1 = a[i];
-			}
-			else if (a[i] > max2)
-			{
-				max3 = max2;
-				max2 = a[i];
-			}
-			else if (a[i] > max3)
-			{
-				max3 = a[i];
-			}
-
-		    if (a[i] < min1)
-			{
-				min2 = min1;
-				min1 = a[i];
-			}
-			else if (a[i] < min2)
-			{
-				min2 = a[i];
-			}
-		}
-		return max((max1 * max2 * max3), (min1 * min2 * max1));
+    int maximumProduct(vector<int>& nums) {
+        int m1=INT_MIN, m2, m3, s1=INT_MAX, s2;
+        m2=m3=m1; s2=s1;
+        for(int i:nums){
+            if(i>m1){
+                m3=m2; m2=m1; m1=i;
+            }else if(i>m2){
+                m3=m2; m2=i;
+            }else if(i>m3) {
+                m3=i;
+            }
+            
+            if(i<s1){
+                s2=s1; s1=i;
+            }else if(i<s2){
+                s2=i;
+            }
+        }
+        return max((m1*m2*m3) , (m1*s1*s2));
     }
 };
