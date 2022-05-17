@@ -6,7 +6,6 @@ public:
         while(i<target){
             i+=k; k++; jumps++;
         }
-        cout<<i<<endl;
         if(i==target) return jumps;
         else{
                 while(true){
