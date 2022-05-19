@@ -15,7 +15,7 @@ class Solution{
     	sort(arr, arr+n);
     	sort(dep, dep+n);
     	int i=0, j=0, currmax=0, overallmax=0;
-    	while(i<n && j<n){
+    	while(i<n){
     	    if(arr[i]<=dep[j]) currmax++, i++;
     	    else currmax--, j++;
     	    overallmax=max(currmax, overallmax);
