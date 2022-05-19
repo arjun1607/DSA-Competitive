@@ -18,7 +18,7 @@ public:
         return ans;
         */
         int i=0, j=0, ans=0;
-        list<int> l;
+        deque<int> l;
         while(j<nums.size()){
             if(nums[j]==0) l.push_back(j);
             if(l.size()<=k){
