@@ -1,15 +1,13 @@
 class Solution {
 public:
     int maxRepeating(string s, string t) {
-        int ans=0;
-        for(int i=0;i<s.size();i++){
-            int k=i, cnt=0;
-            while(k<s.size() && s.substr(k, t.size())==t){
-                cnt++;
-                k+=t.size();
-            }
-            ans=max(ans, cnt);
+        int max=s.size()/t.size();
+        int k=0;
+        string ptr=t;
+        for(int i=1;i<=max;i++){
+            if(s.find(ptr)!=string::npos) k++;
+            ptr+=t;
         }
-        return ans;
+        return k;
     }
 };
