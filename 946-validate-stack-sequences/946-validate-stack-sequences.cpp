@@ -2,9 +2,10 @@ class Solution {
 public:
     bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
         stack<int> s;
-        s.push(pushed[0]);
-        int i=1, j=0;
+        int i=0, j=0;
         while(j<popped.size()){
+            // popped array ko preference deni hogi 
+            // push to always hi kr sakte h
             if(!s.empty() && popped[j]==s.top()){
                 s.pop();
                 j++;
