@@ -4,7 +4,8 @@ public:
         int ans=0;
         while(n!=0){
             if(n&1) ans++;
-            n=n>>1;
+            n/=2;
+            cout<<n<<endl;
         }
         return ans;
     }
