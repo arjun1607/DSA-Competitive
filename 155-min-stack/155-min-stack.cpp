@@ -1,29 +1,35 @@
+typedef long long ll;
 class MinStack {
 public:
-    stack<int> s;
-    multiset<int> m;
-    
     MinStack() {
         
     }
     
+    stack<ll> s;
+    ll mini;
+    
     void push(int val) {
-        s.push(val);
-        m.insert(val);
+        if(s.empty()){
+            mini=val;
+            s.push(0);
+        }else{
+            s.push(val-mini);
+            if(val<mini) mini=val;
+        }
     }
     
     void pop() {
-        auto it=m.find(s.top());
-        m.erase(it);
+        if(s.top()<0) mini=mini-s.top();
         s.pop();
     }
     
     int top() {
-        return s.top();
+        if(s.top()<0) return mini;
+        else return s.top()+mini;
     }
     
     int getMin() {
-        return *(m.begin());
+        return mini;
     }
 };
 
