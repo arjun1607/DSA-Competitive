@@ -49,14 +49,13 @@ public:
         */
         
         int i, j;
-        for(i=0;i<n;i+=j){
+        for(i=0;i<n;i+=(j+1)){
             int currfuel=0;
-            for(j=1;j<=n;j++){
-                int k=(i+j-1);
-                currfuel += (gas[k%n]-cost[k%n]);
+            for(j=0;j<n;j++){
+                currfuel += (gas[(i+j)%n]-cost[(i+j)%n]);
                 if(currfuel < 0) break;
             }
-            if(j>n) return i;
+            if(j==n) return i;
         }
         return -1;
     }
