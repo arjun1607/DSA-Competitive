@@ -8,14 +8,12 @@ public:
     }
     
     int calculate(string s) {
-        if(s[0]=='-') s = '0' + s;
         unordered_map<char, int> prec;
+        // assigning precedence
         prec['+']=1;
         prec['-']=1;
         prec['*']=2;
         prec['/']=2;
-        prec['(']=0;
-        prec[')']=0;
         
         stack<long> nums;
         stack<char> opr; 
@@ -50,7 +48,6 @@ public:
         }
         
         // possibly some operator remain in stack 
-        // Ex, s = 3+4 + (8/4)
         while(!opr.empty() && prec[s[i]] <= prec[opr.top()]){
             long val2 = nums.top(); nums.pop();
             long val1 = nums.top(); nums.pop();
