@@ -29,9 +29,11 @@ class Solution
 	        if(!vis[i]) dfs(adj, vis, i, s);
 	    }
 	    int possible_ans=s.top();
-	    vector<bool> vis2(v, false);
-	    dfs(adj, vis2, possible_ans);
-	    for(bool i:vis2){
+	    vis.clear();
+	    vis.resize(v, false);
+	   // vector<bool> vis2(v, false);
+	    dfs(adj, vis, possible_ans);
+	    for(bool i:vis){
 	        if(i==false) return -1;
 	    }
 	    return possible_ans;
