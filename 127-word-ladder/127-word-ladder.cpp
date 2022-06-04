@@ -14,18 +14,16 @@ public:
             string word=pair.first;
             int lvl=pair.second;
             if(word==end) return lvl;
-            for(int i=0;i<word.size();i++){
-                char original=word[i];
+           for(int i=0;i<word.size();i++){
+                string temp=word;
                 for(char ch='a';ch<='z';ch++){
-                    if(ch!=original){
-                        word[i]=ch;
-                        if(s.find(word)!=s.end()){
-                            s.erase(word);
-                            q.push({word, lvl+1});
+                        temp[i]=ch;
+                        if(s.find(temp)!=s.end()){
+                            s.erase(temp);
+                            q.push({temp, lvl+1});
                         }
-                    }
+                    
                 }
-                word[i]=original;
             }
         }
         return 0;
