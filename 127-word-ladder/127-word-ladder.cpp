@@ -14,15 +14,16 @@ public:
             string word=pair.first;
             int lvl=pair.second;
             if(word==end) return lvl;
+            if(lvl==4) cout<<word<<endl;
            for(int i=0;i<word.size();i++){
                 string temp=word;
                 for(char ch='a';ch<='z';ch++){
-                        temp[i]=ch;
-                        if(s.find(temp)!=s.end()){
-                            s.erase(temp);
-                            q.push({temp, lvl+1});
-                        }
-                    
+                    temp[i]=ch;
+                    if(temp==word) continue;
+                    if(s.find(temp)!=s.end()){
+                        s.erase(temp);
+                        q.push({temp, lvl+1});
+                    }                    
                 }
             }
         }
