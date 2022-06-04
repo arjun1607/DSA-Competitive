@@ -11,6 +11,7 @@ int networkDelayTime(vector<vector<int>>& times, int n, int k) {
     // Basic Dijkstra algorithm
 	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
 	vector<int> distance(n, INT_MAX);
+    distance[k-1]=0;
 	vector<bool> visited(n , false);
 
 	pq.push({0, k - 1});
@@ -24,7 +25,7 @@ int networkDelayTime(vector<vector<int>>& times, int n, int k) {
 		pq.pop();
 
 		visited[currNode] = true;
-		if (currDistance > distance[currNode]) continue;
+		if (currDistance== distance[currNode]) {
 
 		// Go through all the adjacent
 		for (int i = 0; i < graph[currNode].size(); ++i)
@@ -38,6 +39,7 @@ int networkDelayTime(vector<vector<int>>& times, int n, int k) {
 				pq.push({distance[adjNode], adjNode});
 			}
 		}
+        }
 	}
 
 	// Finding out the max distance
