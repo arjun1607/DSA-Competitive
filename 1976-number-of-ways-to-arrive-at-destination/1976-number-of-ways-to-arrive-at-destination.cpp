@@ -19,7 +19,7 @@ public:
         while(!que.empty()){
             auto node = que.top();
             que.pop();
-            if(node.first > dis[node.second]) continue;
+            if(node.first == dis[node.second]) {
             for(auto neighbors : adj[node.second]){
                 long long curr = dis[neighbors.first];
                 long long newd = dis[node.second] + neighbors.second;
@@ -33,11 +33,9 @@ public:
                     
                 }
             }
+            }
         }
-        // for(auto it: dis) cout<<it<<" ";
-        // cout<<endl;
-        // for(auto it: count) cout<<it<<" ";
-        // cout<<endl;
+        
         return count[n-1];
     }
 };
