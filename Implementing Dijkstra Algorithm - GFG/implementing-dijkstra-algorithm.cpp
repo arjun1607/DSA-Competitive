@@ -16,12 +16,12 @@ class Solution
             auto t=pq.top();
             pq.pop();
             int vertex=t.second;
-            int weight=t.first;
-            if(ans[vertex]==-1){
-                ans[vertex]=weight;
+            int dist=t.first;
+            if(ans[vertex]==-1 || dist==ans[vertex]){
+                ans[vertex]=dist;
                 for(auto i:adj[vertex]){
                     if(ans[i[0]]==-1){
-                        pq.push({i[1]+weight, i[0]});
+                        pq.push({i[1]+dist, i[0]});
                     }
                 }
             }
