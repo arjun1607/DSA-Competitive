@@ -1,36 +1,54 @@
 class Solution {
 public:
-    vector<int> dijkstra(vector<pair<int,int>> *adj, int n, int src){
-        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
-        vector<int> vis(n+1, -1);
-        pq.push({0, src});
-        while(!pq.empty()){
-            auto t=pq.top();
-            int vertex=t.second;
-            int weight=t.first;
-            pq.pop();
-            if(vis[vertex]==-1){
-                vis[vertex]=weight;
-                for(auto i:adj[vertex]){
-                    if(vis[i.first]==-1){
-                        pq.push({i.second+weight, i.first});
-                    }
-                }
-            }
-        }
-        return vis;
-    }
-    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
-        vector<pair<int,int>> adj[n+1];
-        for(auto i:times){
-            adj[i[0]].push_back({i[1], i[2]});
-        }
-        vector<int> dist=dijkstra(adj,n,k);
-        int ans=-1;
-        for(int i=1;i<dist.size();i++){
-            if(dist[i]==-1) return -1;
-            ans=max(ans, dist[i]);
-        }
-        return ans;
-    }
+int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+    // Converting the given data to adjacency representation of graph
+	vector<vector<pair<int, int>>> graph(n);
+	for (int i = 0; i < times.size(); ++i)
+	{
+		graph[times[i][0] - 1].push_back({times[i][1] - 1, times[i][2]});
+	}
+    
+    // Basic Dijkstra algorithm
+	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+	vector<int> distance(n, INT_MAX);
+	vector<bool> visited(n , false);
+
+	pq.push({0, k - 1});
+	distance[k - 1] = 0;
+
+	while (!pq.empty())
+	{
+		pair<int, int> curr = pq.top();
+		int currNode = curr.second;
+		int currDistance = curr.first;
+		pq.pop();
+
+		visited[currNode] = true;
+		if (currDistance > distance[currNode]) continue;
+
+		// Go through all the adjacent
+		for (int i = 0; i < graph[currNode].size(); ++i)
+		{
+			int adjNode = graph[currNode][i].first;
+			int adjWeight = graph[currNode][i].second;
+
+			if (distance[currNode] + adjWeight < distance[adjNode])
+			{
+				distance[adjNode] = distance[currNode] + adjWeight;
+				pq.push({distance[adjNode], adjNode});
+			}
+		}
+	}
+
+	// Finding out the max distance
+	int result = -1;
+	for (int i = 0; i < n; ++i)
+	{
+        // if distance is infinity, then return -1 as we cannot reach this node
+		if (distance[i] == INT_MAX) return -1;
+		result = max(distance[i], result);
+	}
+
+	return result;
+}
 };
