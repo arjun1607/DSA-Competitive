@@ -20,39 +20,31 @@ public:
             for(int j=0;j<m;j++){
                 if(grid[i][j]==1) {
                     dfs(grid, i, j);
-                    flag=true;
-                    break;
+                    goto A;
                 }
             }
-            if(flag) break;
         }
-        
+        A:
         int x[4]={-1, 0, 1, 0};
         int y[4]={0, -1, 0, 1};
         int ans;
-        bool got=false;
-      //   cout<<q.size();
         while(!q.empty()){
             auto t=q.front();
             q.pop();
             int i=t[0], j=t[1], lvl=t[2];
-            // cout<<i<<" "<<j<<" ";
             for(int k=0;k<4;k++){
                 int ni=i+x[k], nj=j+y[k];
-                // cout<<ni<<" "<<nj;
                 if(ni>=0 && ni<n && nj>=0 && nj<m && grid[ni][nj]!=2){
-                   //  cout<<grid[ni][nj]<<" "<<lvl+1<<endl;
                     if(grid[ni][nj]==1){
                         ans=lvl;
-                        got=true;
-                        break;
+                        goto B;
                     } 
                     grid[ni][nj]=2;
                     q.push({ni, nj, lvl+1});
                 } 
             }
-            if(got) break;
         }
+        B:
         return ans;
     }
 };
