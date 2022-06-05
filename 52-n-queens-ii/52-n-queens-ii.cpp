@@ -1,32 +1,28 @@
 class Solution {
 public:
-    int count=0;
-    void helper(vector<vector<int>> &chess, int row, vector<bool> &col, vector<bool> &nd, 
-                              vector<bool> &rd){
-        if(row==chess.size()){
-            count++;
+    bool isvalid(vector<string> &grid, int x, int y, int n){
+        for(int i=x-1;i>=0;i--) if(grid[i][y]=='q') return false;
+        for(int i=x-1, j=y-1; i>=0 && j>=0; i--, j--)  if(grid[i][j]=='q') return false;
+        for(int i=x-1, j=y+1; i>=0 && j<n; i--, j++)  if(grid[i][j]=='q') return false;
+        return true;
+    }
+    void helper(int i, vector<string> &grid, int n, int &ans){
+        if(i==n) {
+            ans++;
             return;
         }
-        for(int i=0;i<chess[0].size();i++){
-            if(col[i]==false && nd[i+row]==false && rd[row-i+chess.size()-1]==false){
-                chess[row][i]=1;
-                col[i]=true;
-                nd[row+i]=true;
-                rd[row-i+chess.size()-1]=true;
-                
-                helper(chess, row+1, col, nd, rd);
-                
-                chess[row][i]=0;
-                col[i]=false;
-                nd[row+i]=false;
-                rd[row-i+chess.size()-1]=false;
+        for(int j=0;j<n;j++){
+            if(isvalid(grid, i, j, n)){
+                grid[i][j]='q';
+                helper(i+1, grid, n, ans);
+                grid[i][j]='.';
             }
         }
     }
     int totalNQueens(int n) {
-        vector<vector<int>> chess(n, vector<int>(n,0));
-        vector<bool> col(n, false), nd(2*n-1, false), rd(2*n-1, false);
-        helper(chess, 0, col, nd, rd);
-        return count;
+        vector<string> grid(n, string(n, '.'));
+        int ans=0;
+        helper(0, grid, n, ans);
+        return ans;
     }
 };
