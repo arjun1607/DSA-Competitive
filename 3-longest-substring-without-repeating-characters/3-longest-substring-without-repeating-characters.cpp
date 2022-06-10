@@ -13,7 +13,6 @@ public:
                     if(m[s[i]]==0) m.erase(s[i]);
                     i++;
                 }
-                ans=max(ans, j-i+1);
             }
             j++;
         }
