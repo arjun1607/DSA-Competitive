@@ -16,13 +16,12 @@ public:
                     sum-=nums[i];
                     i++;
                 }
-               if(sum==x) size=max(size, j-i+1);
+                if(sum==x) size=max(size, j-i+1);
             }
             j++;
         }
         
-        if(size==-1) return -1;
-        
+        if(size==-1) return -1;    
         return nums.size()-size;
     }
 };
