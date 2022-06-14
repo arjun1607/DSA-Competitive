@@ -23,6 +23,7 @@ public:
     vector<vector<int>> levelOrder(Node* root) {
         vector<vector<int>> ans;
         if(root==NULL) return ans;
+        
         queue<Node*> q;
         q.push(root);
         while(!q.empty()){
@@ -39,6 +40,7 @@ public:
             }
             ans.push_back(temp);
         }
+        
         return ans;
     }
 };
