@@ -7,7 +7,7 @@ public:
         for(int i=0;i<n;i++) dp[i][i]=true, ans++;
         
         for(int i=n-2;i>=0;i--){
-            for(int j=n-1;j>i;j--){
+            for(int j=i+1;j<n;j++){
                 if(s[i]==s[j]){
                     if(j==i+1 || dp[i+1][j-1]==true) {
                         dp[i][j]=true;
