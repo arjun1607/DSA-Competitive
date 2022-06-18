@@ -4,6 +4,12 @@ class Node{
     bool flag;
     
     public: 
+    Node(){
+        for(int i=0;i<26;i++){
+            links[i] = NULL;
+        }
+        flag=false;
+    }
     bool containsKey(char ch){
         return links[ch - 'a'] != NULL;
     }
