@@ -22,6 +22,11 @@ public:
                     int br = diff;
                     
                     // optimise previous ladder use
+                    /*
+                    If curJumpHeight > min-heap top : We have the choice to use bricks on the previous jump which had less jump height. So, we will use that many bricks on previous (smaller) jump and use ladder for current (larger) jump.
+
+If curJumpHeight <= min-heap top : There's no way to minimize usage of bricks for current jump. We need to spend atleast curJumpHeight number of bricks
+                    */
                     if(!pq.empty() && pq.top()<diff){
                         br = pq.top();
                         pq.pop();
