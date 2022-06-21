@@ -1,45 +1,54 @@
-struct Node{
-    Node* link[26];
-    multiset<string> st;
+class Node{
+    public:
+    Node* links[26];
+    vector<string> v;
+    bool containsKey(char ch){
+        return  links[ch-'a']!=NULL;
+    }
+    void put(char ch, Node* node){
+        links[ch-'a']=node;
+    }
+    Node* get(char ch){
+        return links[ch-'a'];
+    }
+    void push(string s){
+        if(v.size() < 3){
+            v.push_back(s);
+        }
+    }
 };
 class Solution {
 public:
-    Node* root = new Node();
-    void insert_into_trie(string &str){
-        Node* curr = root;
-        for(auto &it : str){
-            if(!curr->link[it - 'a']){
-                curr->link[it - 'a'] = new Node();
-            }
-            curr = curr->link[it - 'a'];
-            curr->st.insert(str);
-        }
-    }
     vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {
-        for(auto &it : products){
-            insert_into_trie(it);
-        }
-        vector<vector<string>> ans;
-        Node* curr = root;
-        for(int i=0;i<searchWord.size();i++){
-            char it = searchWord[i];
-            vector<string> v;
-            if(!curr->link[it - 'a']){
-                while(i < searchWord.size()){
-                    ans.push_back(v);
-                    i++;
+        sort(products.begin(), products.end());
+        Node *root = new Node();
+        for(auto &s:products){
+            Node *node = root;
+            for(int i=0;i<s.size();i++){
+                if(!node->containsKey(s[i])){
+                    node->put(s[i], new Node());
                 }
+                node = node->get(s[i]);
+                node->push(s);
+            }
+        }
+        
+        vector<vector<string>> ans;
+        Node *node = root;
+        int i=0;
+        while(i<searchWord.size()){
+            if(!node->containsKey(searchWord[i])){
                 break;
             }
-            curr = curr->link[it - 'a'];
-            int cnt = 0;
-            for(auto &itr : curr->st){
-                cnt++;
-                v.push_back(itr);
-                if(cnt == 3) break;
-            }
-            ans.push_back(v);
+            node = node->get(searchWord[i]);
+            ans.push_back(node->v);
+            i++;
         }
+        while(i<searchWord.size()){
+            ans.push_back({});
+            i++;
+        }
+        
         return ans;
     }
 };
