@@ -2,9 +2,9 @@ class Solution {
 public:
     int furthestBuilding(vector<int>& h, int bricks, int ladders) {
         // greedy approach :- use ladders for longer climbs & bricks for shorter ones
-        // we need a datastructure to hold k largest climbs (k = no of ladders)
+        // we need a data structure to hold k largest climbs (k = no of ladders)
         // iterate and store the heights to climb in DS of size k
-        // when new height to climb comes , we will check if we can optimise the resources by using ladder tp climb current height instead of which we climbed in past
+        // when new height to climb comes , we will check if we can optimise the resources by using ladder to climb current greater height instead of what smaller height we climbed in past
         
         // if current height to climb > one of the heights in k highest climbs
         // thus try swapping ladder with bricks for lower height
