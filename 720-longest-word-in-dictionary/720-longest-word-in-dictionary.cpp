@@ -27,11 +27,29 @@ public:
         node->flag = true;
     }
     
+    void dfs(Node *node, string temp, string &ans){
+        ans = (temp.size() > ans.size()) ? temp : ans;
+        for(int i=0;i<26;i++){
+            if(node->links[i]!=NULL && node->links[i]->flag!=false){
+                temp += ('a'+i);
+                dfs(node->links[i], temp, ans);
+                temp.pop_back();
+            }
+        }
+    }
+    
     string longestWord(vector<string>& words) {
         for(auto &s:words){
             insert(s);
         }
         
+        
+        Node *node = root;
+        string ans;
+        dfs(node, "", ans);
+        return ans;
+        /*
+        // For every word in the input list, we can check whether all prefixes of that word are in the trie or not
         sort(words.begin(), words.end());
         string ans="";
         for(auto &s:words){
@@ -51,5 +69,6 @@ public:
         }
         
         return ans;
+        */
     }
 };
