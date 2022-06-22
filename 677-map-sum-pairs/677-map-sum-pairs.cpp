@@ -29,13 +29,14 @@ public:
         node->sum = val;
     }
     
-    void dfs(Node *node, int &ans){
-        ans += node->sum;
+    int dfs(Node *node){
+        int ans = node->sum;
         for(int i=0;i<26;i++){
             if(node->links[i] != NULL){
-                dfs(node->links[i], ans);
+                ans += dfs(node->links[i]);
             }
         }
+        return ans;
     }
     int sum(string pre) {
         Node *node = root;
@@ -45,9 +46,6 @@ public:
             }
             node = node->get(pre[i]);
         }
-        if(node==NULL) return 0;
-        int ans=0;
-        dfs(node, ans);
-        return ans;
+        return dfs(node);
     }
 };
