@@ -54,8 +54,8 @@ public:
                 if(!ok) temp+=s[i];
                 i++;
             }
-            i++;
-            ans+=(temp + ' ');
+
+            ans+=(temp + s[i++]);
         }
         ans.pop_back();
         return ans;
