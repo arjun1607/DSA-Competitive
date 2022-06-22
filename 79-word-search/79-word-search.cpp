@@ -23,7 +23,7 @@ public:
         vector<vector<bool>> vis(n, vector<bool>(m, false));
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                dfs(grid, i, j, vis, 0, word);
+                if(grid[i][j]==word[0]) dfs(grid, i, j, vis, 0, word);
             }
         }
         return ans;
