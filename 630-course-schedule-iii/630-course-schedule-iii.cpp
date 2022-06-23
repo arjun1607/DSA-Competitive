@@ -13,10 +13,11 @@ public:
             if(course[0] <= course[1]){
                 // curr course can be completed within last day
                 if(course[0] + time <=  course[1]){
+                    //if yes, add the new course and update the time
                     time+=course[0];
                     pq.push(course[0]);
                 }else{
-                    // check if we can swap
+                    // if exceeds deadline, swap it with the biggest duration from the ones taken up
                     if(pq.top() > course[0]){
                         time -= pq.top();
                         pq.pop();
@@ -29,9 +30,3 @@ public:
         return pq.size();
     }
 };
-
-/*
-Input : [[5,5],[4,6],[2,6]]
-Output : 1
-Expected : 2
-*/
