@@ -18,7 +18,7 @@ public:
                     pq.push(course[0]);
                 }else{
                     // if exceeds deadline, swap it with the biggest duration from the ones taken up
-                    // swap should reduce the time taken till now
+					// swap should reduce the time taken till now
                     if(pq.top() > course[0]){
                         time -= pq.top();
                         pq.pop();
@@ -28,7 +28,8 @@ public:
                 }
             }
         }
-        // all taken up courses present in priority queue
+		
+		// all taken up courses present in priority queue
         return pq.size();
     }
 };
