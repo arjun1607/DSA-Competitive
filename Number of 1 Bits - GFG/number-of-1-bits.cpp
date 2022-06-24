@@ -9,7 +9,8 @@ class Solution {
         // Write Your Code here
         int cnt=0;
         while(n!=0){
-            n=n-(n&(-n));
+            int rsbm=n&(-n);
+            n=n-rsbm;
             cnt++;
         }
         return cnt;
