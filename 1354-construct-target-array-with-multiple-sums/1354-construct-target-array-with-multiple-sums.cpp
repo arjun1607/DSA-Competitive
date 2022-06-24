@@ -9,12 +9,13 @@ public:
         }      
         while(pq.top()!=1){
             long val=pq.top();
-            sum -= val;    
-            if(sum>=val || sum<1) return false;
+            long restsum = sum - val;    
+            if(restsum>=val || restsum<1) return false;
             
-            long old=val%sum;
+            long old=val%restsum; // to reduce time complexity
+            // suppose s
             
-            sum += old;
+            sum = restsum + old;
             pq.pop();
             pq.push(old>0?old:sum);
         }
