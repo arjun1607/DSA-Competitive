@@ -1,11 +1,12 @@
 typedef long long int ll;
 class Solution {
 public:
-    int countSetBits(ll bitmask){
+    int countSetBits(ll mask){
         int c=0;
-        while(bitmask){
-            c += (bitmask%2);
-            bitmask/=2;
+        for(int i=0;i<61;i++){
+            if((mask>>i) & 1){
+                c++;
+            }
         }
         return c;
     }
@@ -38,7 +39,9 @@ public:
     
         vector<vector<ll>> dp(61, vector<ll> (1<<17, -1));
         ll pos = solve(0, 0, n, pmask, dp);
+        
         vector<int> ans;
+        
         int c=0;
         while(pos){
             if(pos%2 == 1) ans.push_back(c);
