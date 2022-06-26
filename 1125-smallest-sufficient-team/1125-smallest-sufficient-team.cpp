@@ -10,14 +10,18 @@ public:
         return c;
     }
     
-    ll recurse(int bitmask, int index, int &no_of_skills, vector<int> &v, vector<vector<ll>> &dp){
-        if(dp[index][bitmask] != -1) return dp[index][bitmask];
-        if(countSetBits(bitmask) == no_of_skills) return 0;
-        if(index >= (int)v.size()) return dp[index][bitmask] = (((ll)1<<62) - 1);
-        ll incl = (ll)1<<index | recurse(bitmask|v[index], index+1, no_of_skills, v, dp);
-        ll excl = recurse(bitmask, index+1, no_of_skills, v, dp);
-        return dp[index][bitmask] = ( countSetBits(incl) < countSetBits(excl) ? incl : excl);
+    ll solve(int mask, int index, int n, vector<int> &v, vector<vector<ll>> &dp){
+        if(mask == (1<<n)-1) return 0;
+        if(index >= (int)v.size()) return dp[index][mask] = (1l<<61)-1;
+        
+        if(dp[index][mask] != -1) return dp[index][mask];
+        
+        ll incl = 1l<<index | solve(mask|v[index], index+1, n, v, dp);
+        ll excl = solve(mask, index+1, n, v, dp);
+        
+        return dp[index][mask] = countSetBits(incl) < countSetBits(excl) ? incl : excl;
     }
+    
     vector<int> smallestSufficientTeam(vector<string>& req_skills, vector<vector<string>>& people) {
         unordered_map<string, int> m;
         for(int i=0;i<(int)req_skills.size();i++){
@@ -33,7 +37,7 @@ public:
         
         int no_of_skills = m.size();
         vector<vector<ll>> dp(65, vector<ll> (1<<(no_of_skills+1), -1));
-        ll pos = recurse(0, 0, no_of_skills, v, dp);
+        ll pos = solve(0, 0, no_of_skills, v, dp);
         vector<int> ans;
         int c=0;
         while(pos){
