@@ -11,14 +11,14 @@ public:
         return c;
     }
     
-    ll solve(int mask, int index, int n, vector<int> &v, vector<vector<ll>> &dp){
+    ll solve(int mask, int index, int n, vector<int> &pmask, vector<vector<ll>> &dp){
         if(mask == (1<<n)-1) return 0;
-        if(index >= (int)v.size()) return dp[index][mask] = (1l<<61)-1;
+        if(index == pmask.size()) return dp[index][mask] = (1l<<61)-1;
         
         if(dp[index][mask] != -1) return dp[index][mask];
         
-        ll incl = 1l<<index | solve(mask|v[index], index+1, n, v, dp);
-        ll excl = solve(mask, index+1, n, v, dp);
+        ll incl = 1l<<index | solve(mask|pmask[index], index+1, n, pmask, dp);
+        ll excl = solve(mask, index+1, n, pmask, dp);
         
         return dp[index][mask] = countSetBits(incl) < countSetBits(excl) ? incl : excl;
     }
