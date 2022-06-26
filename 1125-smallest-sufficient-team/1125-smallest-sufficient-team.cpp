@@ -22,22 +22,22 @@ public:
         return dp[index][mask] = countSetBits(incl) < countSetBits(excl) ? incl : excl;
     }
     
-    vector<int> smallestSufficientTeam(vector<string>& req_skills, vector<vector<string>>& people) {
-        unordered_map<string, int> m;
-        for(int i=0;i<(int)req_skills.size();i++){
-            m[req_skills[i]] = i;
-        }
-        vector<int> v((int)people.size(), 0);
-        for(int i=0;i<(int)people.size();i++){
-            for(int j=0;j<(int)people[i].size();j++){
-                v[i] = v[i]|(1<<m[people[i][j]]);
-            }
-            int temp=v[i];
-        }
+    vector<int> smallestSufficientTeam(vector<string>& skills, vector<vector<string>>& people) {
         
-        int no_of_skills = m.size();
-        vector<vector<ll>> dp(65, vector<ll> (1<<(no_of_skills+1), -1));
-        ll pos = solve(0, 0, no_of_skills, v, dp);
+        unordered_map<string, int> m;
+        int n=skills.size();
+        for(int i=0;i<n;i++){
+            m[skills[i]] = i;
+        }
+        vector<int> pmask(people.size(),0);
+        for(int i=0;i<people.size();i++){
+            for(auto &skill : people[i]){
+                pmask[i] = pmask[i] | (1<<m[skill]);
+            }
+        }
+    
+        vector<vector<ll>> dp(61, vector<ll> (1<<17, -1));
+        ll pos = solve(0, 0, n, pmask, dp);
         vector<int> ans;
         int c=0;
         while(pos){
