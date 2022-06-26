@@ -38,15 +38,14 @@ public:
         }
     
         vector<vector<ll>> dp(61, vector<ll> (1<<17, -1));
-        ll pos = solve(0, 0, n, pmask, dp);
+        
+        ll ansmask = solve(0, 0, n, pmask, dp);
         
         vector<int> ans;
-        
-        int c=0;
-        while(pos){
-            if(pos%2 == 1) ans.push_back(c);
-            c++;
-            pos/=2;
+        for(int i=0;i<61;i++){
+            if((ansmask>>i) & 1){
+                ans.push_back(i);
+            }
         }
         return ans;
     }
