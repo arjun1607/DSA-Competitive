@@ -2,7 +2,6 @@ class Solution {
 public:
     int memo(vector<int> &nums, int target, vector<int> &dp){
         if(target==0) return 1;
-        if(target<0) return 0;
         
         if(dp[target]!=-1) return dp[target];
         
