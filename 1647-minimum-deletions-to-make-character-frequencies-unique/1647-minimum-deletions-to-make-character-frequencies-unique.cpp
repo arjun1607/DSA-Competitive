@@ -10,16 +10,12 @@ public:
 
         int ans=0;
         for(int i=1;i<v.size();i++){
-            if(v[i]==0) continue;
-            if(st.find(v[i])==st.end()) st.insert(v[i]);
-            else{
-                while(st.find(v[i])!=st.end()){
-                    ans++;
+                // Keep decrementing the frequency until it is unique
+                while(v[i] && st.find(v[i])!=st.end()){
                     v[i]--;
-                    if(v[i]==0) break;
+                    ans++;
                 }
-                if(v[i]) st.insert(v[i]);
-            }
+                st.insert(v[i]);
         }
         return ans;        
     }
