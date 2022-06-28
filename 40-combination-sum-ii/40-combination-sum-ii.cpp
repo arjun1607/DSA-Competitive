@@ -3,11 +3,7 @@ public:
     
     vector<vector<int>> ans;
     void solve(int idx, vector<int> &unique, unordered_map<int, int> &fmap, vector<int> &temp, int target){
-        if(target==0){
-            ans.push_back(temp);
-            return;
-        }
-        if(idx==unique.size()){
+        if(idx==unique.size() || target==0){
             if(target==0) ans.push_back(temp);
             return;
         } 
