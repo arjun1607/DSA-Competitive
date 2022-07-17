@@ -10,8 +10,9 @@ public:
                 m[s[j]]--;
                 if(m[s[j]]==0) count--;
             }
-            if(j-i+1<p.size()) j++;
-            else if(j-i+1==p.size()){
+            
+            if(j-i+1 == p.size()){
+                cout<<count<<endl;
                 if(count==0){
                     ans.push_back(i);
                 }
@@ -20,9 +21,10 @@ public:
                     if(m[s[i]]==1) count++;
                 }
                 i++;
-                j++;
             }
-        }
+            
+            j++;
+        }        
         return ans;
     }
 };
