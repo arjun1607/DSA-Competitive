@@ -33,11 +33,11 @@ public:
             }
         }
 
-        if(l2==NULL){
+        if(l1!=NULL){
             if(ft!=NULL) ft->next=l1;
             else fh=l1;
         }
-        if(l1==NULL){
+        if(l2!=NULL){
             if(ft!=NULL) ft->next=l2;
             else fh=l2;
         }
