@@ -18,6 +18,15 @@ public:
         return {it.first, head};
     }
     ListNode* reverseList(ListNode* head) {
-        return helper(head).first;
+        // return helper(head).first;
+        if(head==NULL || head->next==NULL) return head;
+        ListNode *prev=NULL, *curr=head, *nextt=head;
+        while(nextt!=NULL){
+            nextt = nextt->next;
+            curr->next=prev;
+            prev=curr;
+            curr=nextt;
+        }
+        return prev;
     }
 };
