@@ -10,7 +10,7 @@ public:
             nn=-nn;
         }
         
-        long double ans = myPow(x, nn/2);
+        double ans = myPow(x, nn/2);
         if(nn%2==0) ans = ans * ans;
         else  ans = ans * ans * x;
         
