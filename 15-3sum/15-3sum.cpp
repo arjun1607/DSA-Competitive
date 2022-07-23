@@ -1,22 +1,30 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-       // vector<vector<int>> ans;
-        unordered_set<int> s;
-        set<vector<int>> unique;
-        int n=nums.size();
-        for(int i=0;i<n-1;i++){
-            for(int j=i+1; j<n;j++){
-                if(s.find(-(nums[i]+nums[j])) != s.end()){
-                    vector<int> v={nums[i], nums[j], -(nums[i]+nums[j])};
-                    sort(v.begin(), v.end());
-                   //  if(unique.find(v)==unique.end()) ans.push_back(v);
-                    unique.insert(v);
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> ans;
+        int i=0, n=nums.size();
+        while(i<n-2){
+            int a=nums[i];
+            int lo=i+1, hi=n-1;
+            while(lo<hi){
+                if(nums[lo]+nums[hi]==-a){
+                    ans.push_back({a, nums[lo], nums[hi]});
+                    while(lo+1<n && nums[lo+1]==nums[lo]) lo++;
+                    while(hi-1>=0 && nums[hi-1]==nums[hi]) hi--;
+                    lo++; hi--;
+                }
+                else if(nums[lo]+nums[hi]<-a){
+                    while(lo+1<n && nums[lo+1]==nums[lo]) lo++;
+                    lo++;
+                }else{
+                    while(hi-1>=0 && nums[hi-1]==nums[hi]) hi--;
+                    hi--;
                 }
             }
-            s.insert(nums[i]);
+            while(i+1<n && nums[i+1]==nums[i]) i++;
+            i++;
         }
-        vector<vector<int>> ans(unique.begin(), unique.end());
         return ans;
     }
 };
