@@ -1,30 +1,14 @@
 class Solution {
 public:
     vector<vector<int>> generate(int n) {
-        if(n==1){
-            vector<vector<int>> v;
-            v.push_back({1});
-            return v;
+        vector<vector<int>> ans(n);
+        for(int i=0;i<n;i++){
+            ans[i].resize(i+1);
+            ans[i][0]=ans[i][i]=1;
+            for(int j=1;j<i;j++){
+                ans[i][j]=ans[i-1][j-1]+ans[i-1][j];
+            }
         }
-        
-        auto it = generate(n-1);
-        
-        vector<vector<int>> ans;
-        for(auto i:it) ans.push_back(i);
-        
-        
-        auto v=it.back();
-        
-        vector<int> t;
-        int prev=0;
-        for(int i=0;i<v.size();i++){
-            t.push_back(prev+v[i]);
-            prev=v[i];
-        }
-        t.push_back(prev);
-        
-        ans.push_back(t);
-        
         return ans;
     }
 };
