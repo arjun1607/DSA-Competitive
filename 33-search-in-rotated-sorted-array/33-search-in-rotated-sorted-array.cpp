@@ -14,7 +14,7 @@ public:
         int i=find(nums);
         int ans=-1;
         cout<<i<<endl;
-        if(i-1>=0 && binary_search(nums.begin(), nums.begin()+i, k)){
+        if(binary_search(nums.begin(), nums.begin()+i, k)){
             ans=lower_bound(nums.begin(), nums.begin()+i, k)-nums.begin();
         }
         if(binary_search(nums.begin()+i, nums.end(), k)){
