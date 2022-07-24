@@ -8,7 +8,7 @@ public:
             int m=s+(e-s)/2;
             if(nums[m]>nums[e])
                 s=m+1;
-            else if(nums[m]<nums[s])
+            else if(nums[m]<nums[e])
                 e=m;
             else 
                 e--;
