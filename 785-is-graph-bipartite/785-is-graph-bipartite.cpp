@@ -1,27 +1,32 @@
 class Solution {
 public:
-    bool isBipartite(vector<vector<int>>& graph) {
-        int n=graph.size();
-        vector<int> vis(n, -1);
+    bool isBipartite(vector<vector<int>>& adj) {
+        int n=adj.size();
+        vector<int> vis(n, 0);
+        queue<int> q;
         for(int i=0;i<n;i++){
-            if(vis[i]==-1){
-                queue<int> q;
+            if(vis[i]==0){
                 q.push(i);
                 vis[i]=1;
+                
                 while(!q.empty()){
-                        int node=q.front();
-                        int grp=vis[node];
+                    int size=q.size();
+                    while(size--){
+                        int node = q.front();
                         q.pop();
-                        for(int &neigh:graph[node]){
-                            if(vis[neigh]!=-1 && vis[neigh]==grp) return false;
-                            else if(vis[neigh]==-1){
-                                vis[neigh]=(grp==1)?2:1;
-                                q.push(neigh);
+                        int set = vis[node];
+                        for(int i : adj[node]){
+                            if(vis[i]==0){
+                                vis[i] = (set==1)?2:1;
+                                q.push(i);
                             }
+                            else if(vis[i]==set) return false;
                         }
+                    }
                 }
             }
         }
+
         return true;
     }
 };
