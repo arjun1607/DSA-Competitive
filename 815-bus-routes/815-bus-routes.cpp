@@ -1,38 +1,38 @@
 class Solution {
 public:
-    int numBusesToDestination(vector<vector<int>>& routes, int source, int target) {
+    int numBusesToDestination(vector<vector<int>>& routes, int src, int target) {
         unordered_map<int, vector<int>> m;
-        for(int i=0;i<routes.size();i++){
-            for(int j=0;j<routes[i].size();j++){
-                m[routes[i][j]].push_back(i);
+        int n=routes.size();
+        for(int i=0;i<n;i++){
+            for(int j:routes[i]){
+                m[j].push_back(i);
             }
         }
-        vector<int> vis_bus(m.size(), false);
-        unordered_map<int, bool> vis_stop;
-        for(auto i:m){
-            vis_stop[i.first]=false;
-        }
-        queue<pair<int, int>> q;
-        q.push({source, 0});
-        vis_stop[source]=true;
+        vector<bool> visbus(n, false);
+        unordered_map<int, bool> visroute;
+        queue<pair<int,int>> q;
+        q.push({src, 0});
+        visroute[src]=true;
         while(!q.empty()){
-            auto node=q.front();
-            q.pop();
-            int curr_stop = node.first;
-            int count = node.second;
-            if(curr_stop==target) return count;
-            auto busvector = m[curr_stop];
-            for(int available_bus : busvector){
-                if(vis_bus[available_bus]==true) continue;
-                else{
-                    for(int stopno : routes[available_bus]){
-                        if(vis_stop[stopno]==true) continue;
-                        else{
-                            q.push({stopno, count+1});
-                            vis_stop[stopno]=true;
+            int size=q.size();
+            while(size--){
+                auto t = q.front();
+                q.pop();
+                int route = t.first;
+                int lvl = t.second;
+                if(route==target){
+                    return lvl;
+                }
+                for(int i:m[route]){
+                    if(!visbus[i]){
+                        for(int j:routes[i]){
+                            if(!visroute[j]){
+                                q.push({j, lvl+1});
+                                visroute[j]=true;
+                            }
                         }
+                        visbus[i]=true;
                     }
-                    vis_bus[available_bus]=true;
                 }
             }
         }
