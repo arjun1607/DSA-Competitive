@@ -1,31 +1,29 @@
 class Solution {
 public:
-    int area(vector<int>& arr) {
-        int n=arr.size();
+    int area(vector<int> &arr){
         stack<int> s;
-        int area=INT_MIN;
+        int maxi = 0, n=arr.size();
         for(int i=0;i<=n;i++){
-            while(!s.empty() && (i==n || arr[i]<arr[s.top()])){
-                int nsr=i;
-                int x=s.top();
+            while(!s.empty() && (i==n || arr[i] < arr[s.top()])){
+                int nsr = i;
+                int idx = s.top();
                 s.pop();
-                int nsl=s.empty()?-1:s.top();
-                area=max(area,arr[x]*(nsr-nsl-1));
+                int nsl = !s.empty() ? s.top() : -1;
+                maxi = max(maxi, arr[idx] * (nsr - nsl -1));
             }
             if(i<n) s.push(i);
         }
-        return area;
+        return maxi;
     }
-    int maximalRectangle(vector<vector<char>>& matrix) {
-        int n=matrix.size(), m=matrix[0].size(), ans=INT_MIN;
-        vector<int> temp(m, 0);
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(matrix[i][j]=='0') temp[j]=0;
-                else temp[j]++;
+    int maximalRectangle(vector<vector<char>>& grid) {
+        int maxi = 0;
+        vector<int> temp(grid[0].size(), 0);
+        for(int i=0;i<grid.size();i++){
+            for(int j=0;j<grid[0].size();j++){
+                temp[j] = (grid[i][j] == '1') ? ++temp[j] : 0;
             }
-            ans=max(ans, area(temp));
+            maxi = max(maxi, area(temp));
         }
-        return ans;
+        return maxi;
     }
 };
