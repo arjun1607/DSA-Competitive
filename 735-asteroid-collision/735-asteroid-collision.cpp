@@ -7,11 +7,8 @@ public:
                 while(!s.empty() && s.top()>0 && -arr[i]>s.top()){
                     s.pop();
                 }
-                if(!s.empty() && s.top()==-arr[i]){
-                    s.pop();
-                    continue;
-                }
-                if(s.empty() || (!s.empty() && s.top()<0)) s.push(arr[i]);
+                if(!s.empty() && s.top()==-arr[i]) s.pop();
+                else if(s.empty() || (!s.empty() && s.top()<0)) s.push(arr[i]);
             }
             else s.push(arr[i]);
         }
