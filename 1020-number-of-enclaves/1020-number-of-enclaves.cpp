@@ -1,32 +1,32 @@
 class Solution {
 public:
-    int x[4]={-1,0,1,0};
-    int y[4]={0,-1,0,1};
-    void dfs(vector<vector<int>>& grid, int i, int j){
-        if(i<0 || j<0 || i==grid.size() || j==grid[0].size() || grid[i][j]==0) return;
-        grid[i][j]=0;
-        for(int k=0;k<4;k++){
-            int ni=i+x[k], nj=j+y[k];
-            dfs(grid, ni, nj);
-        }
+    void dfs(vector<vector<int>> &grid, int i, int j, vector<vector<bool>> &vis){
+        if(i<0 || j<0 || i==grid.size() || j==grid[0].size() || grid[i][j] == 0 || vis[i][j]) return;
+        vis[i][j]=true;
+        grid[i][j]= 0;
+        dfs(grid, i+1, j, vis);
+        dfs(grid, i-1, j, vis);
+        dfs(grid, i, j+1, vis);
+        dfs(grid, i, j-1, vis);
     }
     int numEnclaves(vector<vector<int>>& grid) {
-        // boundary par jitne 1s h unpr dfs lagado aur make all connected 1s to 0
-        // after that simply calculate the count of ones
-        int n=grid.size(), m=grid[0].size();
+        int n=grid.size(),m=grid[0].size(); 
+        vector<vector<bool>> vis(n, vector<bool> (m, false));
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if((i==0 || j==0 || i==n-1 || j==m-1) && grid[i][j]==1){
-                    dfs(grid, i, j);
+                if( (i==0 || i==n-1 || j==0 || j==m-1 ) && grid[i][j]==1){
+                    dfs(grid, i, j, vis);
                 }
             }
         }
-        int count=0;
-         for(int i=0;i<n;i++){
+        int ans=0;
+        for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if(grid[i][j]==1) count++;
+                if(grid[i][j]==1){
+                    ans++;
+                }
             }
         }
-        return count;
+        return ans;
     }
 };
