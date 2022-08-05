@@ -2,13 +2,12 @@ class Solution {
 public:
     int memo(vector<int> &nums, int target, vector<int> &dp){
         if(target==0) return 1;
-        
-        if(dp[target]!=-1) return dp[target];
-        
+        if(dp[target] != -1) return dp[target];
         int ans=0;
         for(int i=0;i<nums.size();i++){
-            if(nums[i] <= target)
-                ans += memo(nums, target-nums[i], dp);
+            if(nums[i] <= target){
+                ans += memo(nums, target - nums[i], dp);
+            }
         }
         return dp[target] = ans;
     }
