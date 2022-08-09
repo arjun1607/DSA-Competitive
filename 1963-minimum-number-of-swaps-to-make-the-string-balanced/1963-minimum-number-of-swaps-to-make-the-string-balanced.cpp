@@ -10,6 +10,8 @@ public:
             }
             else s.push(c);
         }
+        // optimal approach is to balance 2 sets of brackets at a time using 1 swap
+        // desi bhasha -  1 swap 4 bando ko le dubega
         return ceil(s.size()/4.0);
     }
 };
