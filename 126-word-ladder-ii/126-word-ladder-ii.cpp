@@ -1,63 +1,116 @@
 class Solution {
 public:
-    // we want to maintain adj list such that, when we are at a node then all the nodes to which it is pointing are its children. it should not be parent or any node at the same level
-    vector<vector<string>> ans;
-    void dfs(unordered_map<string, unordered_set<string>> &adj, string src, string des, 
-                  int lvl, vector<string> &path, unordered_map<string, bool> &vis){
-        if(lvl==0) return;
-        if(lvl==1){
-            if(src==des) ans.push_back(path);
-            return;
-        }
-        vis[src]=true;
-        for(string i:adj[src]){
-            if(!vis[i]){
-                path.push_back(i);
-                dfs(adj, i, des, lvl-1, path, vis);
-                path.pop_back();
+    bool neighbour(string a, string b){
+        int cnt = 0 ;
+        for(int i = 0 ; i < a.length() ; i++)
+        {
+            if(a[i] != b[i])
+            {
+                cnt++ ;
             }
         }
-        vis[src]=false;
+        return cnt == 1 ;
     }
-    vector<vector<string>> findLadders(string begin, string end, vector<string>& wordlist) {
-        set<string> dict;
-        for(auto i:wordlist){
-            dict.insert(i);
+    vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+        wordList.insert(wordList.begin(), beginWord);
+        for(int i = 1 ; i < wordList.size() ; i++)
+        {
+            if(wordList[i] == wordList[0]) // string compare
+            {
+                wordList[i] = wordList.back() ;
+                wordList.pop_back() ;
+                break ;
+            }
         }
-        
-        unordered_map<string, int> depth;      
-        queue<string> q;
-        q.push(begin);
-        depth[begin]=1;
-        
-        unordered_map<string, unordered_set<string>> adj;
-        while(!q.empty()){
-            string word=q.front();
-            q.pop();
-            if(word==end) break;
-            for(int i=0;i<word.size();i++){
-                string temp=word;
-                for(char ch='a';ch<='z';ch++){
-                    temp[i]=ch;
-                    if(temp==word) continue;
-                    if(dict.find(temp)!=dict.end()) {
-                        if(depth.find(temp)==depth.end()){
-                            q.push(temp);
-                            depth[temp]=depth[word]+1;
-                            cout<<temp<<" "<<depth[temp]<<endl;
-                            adj[word].insert(temp);
-                        }else if(depth[temp]==depth[word]+1){
-                            adj[word].insert(temp);
-                        }
-                    } 
+        map<string, int> wti ; // word to index
+        for(int i = 0 ; i < wordList.size() ; i++)
+        {
+            wti.insert({wordList[i], i}) ;
+        }
+        if(!wti.count(endWord)) 
+        {
+            return {} ;
+        }
+        vector<vector<int>> edges(wti.size()) ;
+        for(int i = 0 ; i < wordList.size() ; i++)
+        {
+            for(int j = 0 ; j < wordList.size() ; j++)
+            {
+                if(i != j)
+                {
+                    if(neighbour(wordList[i], wordList[j]))
+                    {
+                        edges[i].push_back(j) ;
+                    }
                 }
             }
         }
-    
-        vector<string> path;
-        path.push_back(begin);
-        unordered_map<string, bool> vis;
-        dfs(adj, begin, end, depth[end], path, vis);
-        return ans;
+        // BFS  
+        int start_node = 0 , target_node = wti[endWord] , r = 0 , min_step = INT_MAX ;
+        vector<int> vis(wordList.size(), INT_MAX) ;   
+        vis[start_node] = 0 ;
+        queue<int> q ;   
+        q.push(start_node) ;
+        while(!q.empty())
+        {
+            int sz  = q.size() ;
+            for (int i = 0 ; i < sz ; i++)
+            {
+                int fr = q.front() ;  
+                q.pop() ;
+                if(fr == target_node)
+                {
+                    min_step = min(min_step , r) ;
+                }
+                for(int j = 0 ; j < edges[fr].size() ; j++)
+                {
+                    int update_node = edges[fr][j] ;
+                    if(r + 1 < vis[update_node])
+                    {
+                        vis[update_node] = r + 1 ;
+                        q.push(update_node);
+                    }
+                }
+            }
+            r++ ;
+        }
+        if(min_step == INT_MAX)
+        {
+            return {} ;
+        }
+        queue<vector<string>> q2 ; 
+        q2.push({wordList[target_node]}) ;
+        r = min_step ;
+        while(r)
+        {
+             int sz  = q2.size() ;
+             for(int i = 0 ; i < sz ; i++)
+             {
+                vector<string> seq = q2.front() ;
+                q2.pop();
+                string back = seq.back() ;
+                int curr = wti[back] ;
+                for (int j = 0 ; j < edges[curr].size() ; j++)
+                {
+                    int new_node = edges[curr][j] ;
+                    if (vis[new_node] == r - 1)
+                    {
+                        seq.push_back(wordList[new_node]) ;
+                        q2.push(seq) ;
+                        seq.pop_back() ;
+                    }
+                }
+            }
+            r-- ;
+        }
+        vector<vector<string>> ans;
+        while(!q2.empty())
+        {
+            vector<string> temp = q2.front() ;
+            q2.pop() ;
+            reverse(begin(temp) , end(temp)) ;
+            ans.push_back(temp) ;
+        }
+        return ans ;
     }
 };
