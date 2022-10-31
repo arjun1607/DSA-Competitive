@@ -1,15 +1,11 @@
 class Solution {
 public:
-    bool isToeplitzMatrix(vector<vector<int>>& grid) {
-        unordered_map<int,int> m;
-        for(int i=0;i<grid.size();i++){
-            for(int j=0;j<grid[0].size();j++){
-                if(m.find(i-j)==m.end()) m[i-j] = grid[i][j];
-                else{
-                    if(m[i-j]!=grid[i][j]) return false;
-                }
-            }
-        }
+    bool isToeplitzMatrix(vector<vector<int>>& matrix) {
+        int m = matrix.size(), n = matrix[0].size();
+        for (int i = 1; i < m; i++)
+            for (int j = 1; j < n; j++)
+                if (matrix[i][j] != matrix[i - 1][j - 1])
+                    return false;
         return true;
     }
 };
